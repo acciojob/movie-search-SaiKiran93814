@@ -30,25 +30,38 @@ function MovieSearch() {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Enter movie name"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
+      {/* ✅ Wrap input/button in form tag */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Enter movie name"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
 
+      {/* ✅ Error message */}
       {error && <p className="error">{error}</p>}
 
-      <div className="movie-list">
+      {/* ✅ Render results inside <ul> with <li> elements */}
+      <ul className="movie-list">
         {movies.map((movie) => (
-          <div key={movie.imdbID} className="movie-card">
-            <img src={movie.Poster !== "N/A" ? movie.Poster : "https://via.placeholder.com/150"} alt={movie.Title} />
+          <li key={movie.imdbID} className="movie-card">
+            <img
+              src={movie.Poster !== "N/A" ? movie.Poster : "https://via.placeholder.com/150"}
+              alt={movie.Title}
+            />
             <h3>{movie.Title}</h3>
             <p>{movie.Year}</p>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
